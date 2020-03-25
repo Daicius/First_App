@@ -6,5 +6,6 @@
     <string name="Add_3">+3 POINT</string>
     <string name="TeamA">TeamA</string>
     <string name="TeamB">TeamB</string>
-
+    <string name="change">转换</string>
+    <string name="imput_centidegree">请输入摄氏度</string>
 </resources>

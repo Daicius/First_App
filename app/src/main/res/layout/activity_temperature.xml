@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".temperature"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+
+
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:layout_marginBottom="50dp"
+        android:text="0" />
+
+
+    <EditText
+        android:id="@+id/et1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/imput_centidegree"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:onClick="btnChange"
+        android:text="@string/change" />
+</LinearLayout>
