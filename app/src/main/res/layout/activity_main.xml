@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,31 +8,39 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="446dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_alignParentLeft="true">
+        android:orientation="vertical">
+
 
         <TextView
+            android:id="@+id/teamName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/TeamA"
-            android:id="@+id/teamName"
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
             android:padding="20dp"
             android:text="0"
-            android:id="@+id/score"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="100sp" />
 
@@ -59,19 +67,71 @@
             android:onClick="btnAdd3"
             android:text="@string/Add_3" />
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/teamName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/TeamB"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/score2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:padding="20dp"
+            android:text="0"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="100sp" />
+
+        <Button
+            android:id="@+id/btn2_1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:onClick="btnAdd1"
+            android:text="@string/Add_1" />
+
+        <Button
+            android:id="@+id/btn2_2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:onClick="btnAdd2"
+            android:text="@string/Add_2" />
+
+        <Button
+            android:id="@+id/btn2_3"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:onClick="btnAdd3"
+            android:text="@string/Add_3" />
 
     </LinearLayout>
-
+</LinearLayout>
     <Button
         android:id="@+id/btn_Reset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="12dp"
         android:onClick="btnReset"
         android:text="@string/Reset" />
 
-</RelativeLayout>
+</LinearLayout>
 
 
 
