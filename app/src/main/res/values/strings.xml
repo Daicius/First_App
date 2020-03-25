@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">First_App</string>
+    <string name="Reset">Reset</string>
+    <string name="Add_1">+1 POINT</string>
+    <string name="Add_2">+2 POINT</string>
+    <string name="Add_3">+3 POINT</string>
+    <string name="TeamA">TeamA</string>
+
+</resources>
