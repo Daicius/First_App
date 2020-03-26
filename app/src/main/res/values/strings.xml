@@ -7,5 +7,13 @@
     <string name="TeamA">TeamA</string>
     <string name="TeamB">TeamB</string>
     <string name="change">转换</string>
+    <string name="imput">温度转换器</string>
     <string name="imput_centidegree">请输入摄氏度</string>
+    <string name="switch1">跳转至比赛计分</string>
+    <string name="money1">输入外币</string>
+    <string name="Exchanange">可兑换人民币</string>
+    <string name="USD">USD</string>
+    <string name="THB">THB</string>
+    <string name="GBP">GBP</string>
+    <string name="JPY">JPY</string>
 </resources>
