@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".config">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/THB2"
+        android:hint="@string/THB"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:hint="@string/JPY"
+        android:id="@+id/JPY2"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:hint="@string/USD"
+        android:id="@+id/USD2"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="match_parent"
+        android:hint="@string/GBP"
+        android:id="@+id/GBP2"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:onClick="save"
+        android:text="@string/save"/>
+
+
+</LinearLayout>

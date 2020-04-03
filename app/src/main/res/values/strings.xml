@@ -16,4 +16,7 @@
     <string name="THB">THB</string>
     <string name="GBP">GBP</string>
     <string name="JPY">JPY</string>
+    <string name="config">CONFIG</string>
+    <string name="save">SAVE</string>
+    <string name="setting">setting</string>
 </resources>

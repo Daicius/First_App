@@ -32,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/money1"
+        android:inputType="number"
         android:id="@+id/et_imput"
         android:singleLine="true"
         android:layout_marginTop="24dp"
@@ -68,6 +69,14 @@
         android:onClick="btnTHB"
         android:layout_marginTop="24dp"
         android:text="@string/THB"
+        android:gravity="center"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:id="@+id/config"
+        android:text="@string/config"
+        android:onClick="btnSwitchconfig"
         android:gravity="center"/>
 
 </LinearLayout>
