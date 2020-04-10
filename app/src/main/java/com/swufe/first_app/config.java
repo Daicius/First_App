@@ -20,6 +20,7 @@ public final String TAG = "config";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         Intent intent = getIntent();
+
         double USD_rate2 = intent.getDoubleExtra("USD",0);
         double JPY_rate2 = intent.getDoubleExtra("JPY",0);
         double GBP_rate2 = intent.getDoubleExtra("GBP",0);
