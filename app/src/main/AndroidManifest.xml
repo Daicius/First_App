@@ -11,8 +11,9 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".config"></activity>
-        <activity android:name=".rate">
+<!--        <activity android:name=".MainActivity"/>-->
+<!--        <activity android:name=".config"></activity>-->
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

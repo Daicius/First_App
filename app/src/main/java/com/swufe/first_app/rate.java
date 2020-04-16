@@ -1,7 +1,6 @@
 package com.swufe.first_app;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -9,6 +8,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -18,9 +19,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+//import org.jsoup.Jsoup;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 
-public class rate extends AppCompatActivity {
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+public class rate extends AppCompatActivity implements Runnable{
     TextView forignMoney;
     EditText myMoney;
     double JPY_rate = 0.06422;
@@ -28,6 +42,7 @@ public class rate extends AppCompatActivity {
     double THB_rate = 0.2167;
     double GBP_rate = 8.434;
     String TAG = "rate";
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +60,29 @@ public class rate extends AppCompatActivity {
          Log.i(TAG,"onCreat_GBP_rate"+GBP_rate);
          Log.i(TAG,"onCreat_JPY_rate"+JPY_rate);
          Log.i(TAG,"onCreat_THB_rate"+THB_rate);
+         Thread t = new Thread(this);
+         t.start();
+         handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                if(msg.what == 5){
+                    Bundle bd1 =(Bundle)msg.obj;
+                    USD_rate = bd1.getDouble("USD_rate");
+                    JPY_rate = bd1.getDouble("JPY_rate");
+                    THB_rate = bd1.getDouble("THB_rate");
+                    GBP_rate = bd1.getDouble("GBP_rate");
+
+                    Log.i(TAG,"handlermessage"+USD_rate);
+                    Log.i(TAG,"handlermessage"+JPY_rate);
+                    Log.i(TAG,"handlermessage"+GBP_rate);
+                    Log.i(TAG,"handlermessage"+THB_rate);
+                    Toast.makeText(rate.this,"汇率更新",Toast.LENGTH_SHORT).show();
+                }
+                super.handleMessage(msg);
+
+            }
+        };
+
     }
 
     public static boolean isNumber(String str) {
@@ -153,6 +191,84 @@ public class rate extends AppCompatActivity {
 //        startActivity(config);
         startActivityForResult(config,1);
     }
+    private String inputStream2String(InputStream inputStream) throws IOException {
+        final int bufferSize = 1024;
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(inputStream, "utf-8");
+        int charsRead;
+        while((charsRead = in.read(buffer, 0, buffer.length)) > 0) {
+            out.append(buffer, 0, charsRead);
+        }
+        return out.toString();
+    }
 
+
+    @Override
+    public void run() {
+        Log.i(TAG, "Run:Run.....");
+//        for (int i = 1; i < 6; i++) {
+//            Log.i(TAG, "i:" + i);
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        Bundle bundle = new Bundle();
+//        URL url = null;
+//        try {
+//            url = new URL("https://www.boc.cn/sourcedb/whpj/");
+//            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+//            InputStream inputStream = httpURLConnection.getInputStream();
+//            String html = inputStream2String(inputStream);
+//            Log.i(TAG,"html:"+html);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        Document doc = null;
+        try {
+            doc = Jsoup.connect("https://www.boc.cn/sourcedb/whpj/").get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Log.i(TAG, doc.title());
+        Elements tables = doc.getElementsByTag("table");
+
+//        for (Element table : tables) {
+//            Log.i(TAG,"run:tables"+table);
+//        }
+        Element table6 = tables.get(1);
+//        Log.i(TAG,"table6 = "+table6);
+        Elements tds = table6.getElementsByTag("td");
+        for(int i = 0;i < tds.size();i+=8){
+            Element td1 = tds.get(i);
+            Element td5 = tds.get(i+5);
+            String str1 = td1.text();
+            String str2 = td5.text();
+            Log.i(TAG,"text="+str1);
+            Log.i(TAG, "val="+str2);
+            if(str1.equals("英镑")){
+                bundle.putDouble("GBP_rate",Double.parseDouble(str2)/100.0);
+            }else if(str1.equals("泰国铢")){
+                bundle.putDouble("THB_rate",Double.parseDouble(str2)/100.0);
+            }else if(str1.equals("美元")){
+                bundle.putDouble("USD_rate",Double.parseDouble(str2)/100.0);
+            }else if(str1.equals("日元")){
+                bundle.putDouble("JPY_rate",Double.parseDouble(str2)/100.0);
+            }
+        }
+        Message msg = handler.obtainMessage(5);
+        msg.obj = bundle;
+        handler.sendMessage(msg);
+//        for(Element td : tds) {
+//            Log.i(TAG, "tds = " + td);
+//            Log.i(TAG,"text="+td.text());
+//            Log.i(TAG,"html="+td.html());
+//        }
+    }
 }
+
 
