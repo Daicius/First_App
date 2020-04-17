@@ -12,8 +12,9 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
 <!--        <activity android:name=".MainActivity"/>-->
-<!--        <activity android:name=".config"></activity>-->
-        <activity android:name=".MainActivity">
+        <activity android:name=".config"></activity>
+        <activity android:name=".rate">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

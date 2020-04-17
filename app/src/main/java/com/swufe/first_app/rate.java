@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class rate extends AppCompatActivity implements Runnable{
     TextView forignMoney;
@@ -41,6 +44,7 @@ public class rate extends AppCompatActivity implements Runnable{
     double USD_rate = 7.095;
     double THB_rate = 0.2167;
     double GBP_rate = 8.434;
+    String updateDate = "";
     String TAG = "rate";
     Handler handler;
 
@@ -52,39 +56,85 @@ public class rate extends AppCompatActivity implements Runnable{
         myMoney = findViewById(R.id.et_imput);
         SharedPreferences sharedPreferences = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-         USD_rate = Double.parseDouble(sharedPreferences.getString("USD_rate","0"));
-         JPY_rate = Double.parseDouble(sharedPreferences.getString("JPY_rate","0"));
-         GBP_rate = Double.parseDouble(sharedPreferences.getString("GBP_rate","0"));
-         THB_rate = Double.parseDouble(sharedPreferences.getString("THB_rate","0"));
-         Log.i(TAG,"onCreat_USD_rate"+USD_rate);
-         Log.i(TAG,"onCreat_GBP_rate"+GBP_rate);
-         Log.i(TAG,"onCreat_JPY_rate"+JPY_rate);
-         Log.i(TAG,"onCreat_THB_rate"+THB_rate);
-         Thread t = new Thread(this);
-         t.start();
-         handler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                if(msg.what == 5){
-                    Bundle bd1 =(Bundle)msg.obj;
-                    USD_rate = bd1.getDouble("USD_rate");
-                    JPY_rate = bd1.getDouble("JPY_rate");
-                    THB_rate = bd1.getDouble("THB_rate");
-                    GBP_rate = bd1.getDouble("GBP_rate");
+        USD_rate = Double.parseDouble(sharedPreferences.getString("USD_rate", "0"));
+        JPY_rate = Double.parseDouble(sharedPreferences.getString("JPY_rate", "0"));
+        GBP_rate = Double.parseDouble(sharedPreferences.getString("GBP_rate", "0"));
+        THB_rate = Double.parseDouble(sharedPreferences.getString("THB_rate", "0"));
+        updateDate = sharedPreferences.getString("update_date","");
+        Log.i(TAG, "onCreat_USD_rate" + USD_rate);
+        Log.i(TAG, "onCreat_GBP_rate" + GBP_rate);
+        Log.i(TAG, "onCreat_JPY_rate" + JPY_rate);
+        Log.i(TAG, "onCreat_THB_rate" + THB_rate);
+        //获取当前时间
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+        final String todayStr = simpleDateFormat.format(today);
+        Log.i(TAG,"当前时间"+todayStr);
+        //判断日期是否相同
+        if (!todayStr.equals(updateDate)) {
+            Log.i(TAG, "onCreate:don't need updates");
+            //开启子线程
+            Thread t = new Thread(this);
+            t.start();
+        } else {
+            Log.i(TAG, "onCreate:don't need updates");
+        }
+            handler = new Handler() {
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    if (msg.what == 5) {
+                        Bundle bd1 = (Bundle) msg.obj;
+                        USD_rate = bd1.getDouble("USD_rate");
+                        JPY_rate = bd1.getDouble("JPY_rate");
+                        THB_rate = bd1.getDouble("THB_rate");
+                        GBP_rate = bd1.getDouble("GBP_rate");
 
-                    Log.i(TAG,"handlermessage"+USD_rate);
-                    Log.i(TAG,"handlermessage"+JPY_rate);
-                    Log.i(TAG,"handlermessage"+GBP_rate);
-                    Log.i(TAG,"handlermessage"+THB_rate);
-                    Toast.makeText(rate.this,"汇率更新",Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "handlermessage" + USD_rate);
+                        Log.i(TAG, "handlermessage" + JPY_rate);
+                        Log.i(TAG, "handlermessage" + GBP_rate);
+                        Log.i(TAG, "handlermessage" + THB_rate);
+                        Toast.makeText(rate.this, "汇率更新", Toast.LENGTH_SHORT).show();
+                    }
+                    super.handleMessage(msg);
+
                 }
-                super.handleMessage(msg);
-
-            }
-        };
-
+            };
+        //保存更新的日期
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("update_date", todayStr);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG,"onStart:");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG,"onRsume");
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG,"onRestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG,"onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG,"onStop");
+    }
+
+//判断输入合法性
     public static boolean isNumber(String str) {
         String reg = "^[0-9]+(.[0-9]+)?$";
         return str.matches(reg);
@@ -114,21 +164,26 @@ public class rate extends AppCompatActivity implements Runnable{
     }
 
     public void btnUSD(View btn) {
+        Log.i(TAG,"onclick:USD");
         double usd=Exchange("USD");
         forignMoney.setText(""+usd);
+
     }
 
     public void btnJPY(View btn) {
+        Log.i(TAG,"onclick:JPY");
        double jap = Exchange("JPY");
         forignMoney.setText(""+jap);
     }
 
     public void btnGBP(View btn) {
+        Log.i(TAG,"onclick:GBP");
         double gbp = Exchange("GBP");
         forignMoney.setText(""+gbp);
     }
 
     public void btnTHB(View btn) {
+        Log.i(TAG,"onclick:THB");
         double thb = Exchange("THB");
         forignMoney.setText(""+thb);
     }
@@ -175,6 +230,7 @@ public class rate extends AppCompatActivity implements Runnable{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.rate,menu);
+
         return true;
     }
     public  void OpenNew(){
