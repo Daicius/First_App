@@ -67,12 +67,12 @@ public class rate extends AppCompatActivity implements Runnable{
         Log.i(TAG, "onCreat_THB_rate" + THB_rate);
         //获取当前时间
         Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String todayStr = simpleDateFormat.format(today);
         Log.i(TAG,"当前时间"+todayStr);
         //判断日期是否相同
         if (!todayStr.equals(updateDate)) {
-            Log.i(TAG, "onCreate:don't need updates");
+            Log.i(TAG, "onCreate: need updates");
             //开启子线程
             Thread t = new Thread(this);
             t.start();
@@ -88,11 +88,13 @@ public class rate extends AppCompatActivity implements Runnable{
                         JPY_rate = bd1.getDouble("JPY_rate");
                         THB_rate = bd1.getDouble("THB_rate");
                         GBP_rate = bd1.getDouble("GBP_rate");
+                        updateDate = bd1.getString("update_date");
 
                         Log.i(TAG, "handlermessage" + USD_rate);
                         Log.i(TAG, "handlermessage" + JPY_rate);
                         Log.i(TAG, "handlermessage" + GBP_rate);
                         Log.i(TAG, "handlermessage" + THB_rate);
+                        Log.i(TAG, "handlermessage" + updateDate);
                         Toast.makeText(rate.this, "汇率更新", Toast.LENGTH_SHORT).show();
                     }
                     super.handleMessage(msg);
@@ -102,36 +104,7 @@ public class rate extends AppCompatActivity implements Runnable{
         //保存更新的日期
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("update_date", todayStr);
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG,"onStart:");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG,"onRsume");
-    }
-
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(TAG,"onRestart");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG,"onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(TAG,"onStop");
+        editor.commit();
     }
 
 //判断输入合法性
@@ -187,8 +160,8 @@ public class rate extends AppCompatActivity implements Runnable{
         double thb = Exchange("THB");
         forignMoney.setText(""+thb);
     }
-    public void btnSwitchconfig(View btn){
-      OpenNew();
+    public void btnSwitchConfig(View btn){
+      OpenConfig();
     }
 
 
@@ -224,18 +197,23 @@ public class rate extends AppCompatActivity implements Runnable{
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.setting){
+            OpenConfig();
+        }else if(item.getItemId() == R.id.Open_list){
+            Intent list = new Intent(this,RateListActivity.class);
+            startActivity(list);
+        }
          return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.rate,menu);
-
         return true;
     }
-    public  void OpenNew(){
+    public  void OpenConfig(){
         Log.i("open","open1");
-        Intent config=new Intent(this,config.class);
+        Intent config = new Intent(this,config.class);
         config.putExtra("USD",USD_rate);
         config.putExtra("JPY",JPY_rate);
         config.putExtra("GBP",GBP_rate);

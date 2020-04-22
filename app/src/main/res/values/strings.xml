@@ -19,4 +19,5 @@
     <string name="config">CONFIG</string>
     <string name="save">SAVE</string>
     <string name="setting">setting</string>
+    <string name="open_list">Open_new_list</string>
 </resources>
