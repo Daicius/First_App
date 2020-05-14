@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RateListActivity"></activity>
-        <!-- <activity android:name=".MainActivity"/> -->
+        <activity android:name=".RateCalcActivity"></activity>
+        <activity android:name=".Mylist2Activity" />
+        <activity android:name=".RateListActivity" />
         <activity android:name=".config" />
         <activity android:name=".rate">
             <intent-filter>

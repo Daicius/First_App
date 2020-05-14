@@ -114,7 +114,7 @@ public class rate extends AppCompatActivity implements Runnable{
     }
 
     public double Exchange(String str) {
-        if (myMoney.getText() == null|| myMoney.getText().equals("")) {
+        if (myMoney.getText().length() == 0) {
             Toast.makeText(this,"请输入数字",Toast.LENGTH_SHORT).show();
             return  0;
         } else {
@@ -131,7 +131,8 @@ public class rate extends AppCompatActivity implements Runnable{
                     return CHN * THB_rate;
                 }
             } else {
-                throw new NumberFormatException("请输入数字");
+                Toast.makeText(this,"请输入数字",Toast.LENGTH_SHORT).show();
+                return 0;
             }
         }
     }
@@ -200,26 +201,27 @@ public class rate extends AppCompatActivity implements Runnable{
         if(item.getItemId() == R.id.setting){
             OpenConfig();
         }else if(item.getItemId() == R.id.Open_list){
-            Intent list = new Intent(this,RateListActivity.class);
+            Intent list = new Intent(this,Mylist2Activity.class);
             startActivity(list);
+            Log.i(TAG,"open_new");
         }
          return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.rate,menu);
-        return true;
-    }
-    public  void OpenConfig(){
-        Log.i("open","open1");
-        Intent config = new Intent(this,config.class);
-        config.putExtra("USD",USD_rate);
-        config.putExtra("JPY",JPY_rate);
-        config.putExtra("GBP",GBP_rate);
-        config.putExtra("THB",THB_rate);
-        Log.i("USD",""+USD_rate);
-        Log.i("JPY",""+JPY_rate);
+            getMenuInflater().inflate(R.menu.rate,menu);
+            return true;
+        }
+        public  void OpenConfig(){
+            Log.i("open","open1");
+            Intent config = new Intent(this,config.class);
+            config.putExtra("USD",USD_rate);
+            config.putExtra("JPY",JPY_rate);
+            config.putExtra("GBP",GBP_rate);
+            config.putExtra("THB",THB_rate);
+            Log.i("USD",""+USD_rate);
+            Log.i("JPY",""+JPY_rate);
         Log.i("GBP",""+GBP_rate);
         Log.i("THB",""+THB_rate);
 //        startActivity(config);
