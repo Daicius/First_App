@@ -204,6 +204,9 @@ public class rate extends AppCompatActivity implements Runnable{
             Intent list = new Intent(this,Mylist2Activity.class);
             startActivity(list);
             Log.i(TAG,"open_new");
+        }else  if (item.getItemId() == R.id.test){
+            Intent list = new Intent(this,List2Activity.class);
+            startActivity(list);
         }
          return super.onOptionsItemSelected(item);
     }

@@ -9,4 +9,8 @@
         android:id="@+id/Open_list"
         android:title="@string/open_list"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/test"
+        android:title="@string/no_data"
+        app:showAsAction="never"/>
 </menu>
