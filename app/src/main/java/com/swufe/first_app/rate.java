@@ -36,6 +36,7 @@ import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class rate extends AppCompatActivity implements Runnable{
     TextView forignMoney;
@@ -201,8 +202,19 @@ public class rate extends AppCompatActivity implements Runnable{
         if(item.getItemId() == R.id.setting){
             OpenConfig();
         }else if(item.getItemId() == R.id.Open_list){
-            Intent list = new Intent(this,Mylist2Activity.class);
+            Intent list = new Intent(this,RateListActivity.class);
             startActivity(list);
+//            //测试数据库
+//            RateItem rateItem = new RateItem("aaa","123");
+//            RateManager rateManager = new RateManager(this);
+//            rateManager.add(rateItem);
+//            rateManager.add(new RateItem("bbbb","345"));
+//            //查询数据
+//            List<RateItem> items = rateManager.listAll();
+//            for (RateItem i : items){
+//                Log.i(TAG,"取出数据"+i.getCurName()+"  "+i.getCurRate());
+//            }
+
             Log.i(TAG,"open_new");
         }else  if (item.getItemId() == R.id.test){
             Intent list = new Intent(this,List2Activity.class);
